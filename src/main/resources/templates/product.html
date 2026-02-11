@@ -2,9 +2,67 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <Title>Product</Title>
+    <Title>Home</Title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 <body>
-    <h3>Product</h3>
+<!-- Navbar -->
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="/">
+                <div>Marketplace</div>
+            </a>
+            <ul class="nav-menu">
+                <li>
+                    <div>
+                        <label for="search-bar"></label><input
+                            id="search-bar"
+                            type="search"
+                            placeholder="Search"
+                            required />
+                        <button type="submit" class="search-button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </li>
+                <li><a href="/basket">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </a></li>
+                <li><strong>Sign Up</strong></li>
+                <li><small>Log In</small></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <div class="product-page">
+            <div class="product-page-image-container">
+                <img th:if="${product.image == null}"
+                     th:src="@{/images/unloaded-image.png}"
+                     alt="Product Image"
+                     class="big-product-image">
+                <img th:if="${product.image != null}"
+                     th:src="@{/uploadedImages/{id}(id=${product.image?.id})}"
+                     alt="Product Image"
+                     class="big-product-image">
+
+            </div>
+            <div class="product-page-top-right">
+                <div class="description-box">
+                    <h3 th:text="${product.title}"></h3>
+                    <p th:text="${product.description}"></p>
+                </div>
+                <div class="buttons-wrapper">
+                    <button class="add-to"><b>Add to Basket</b></button>
+                </div>
+            </div>
+
+            <div class="product-page-bottom"></div>
+
+        </div>
+    </main>
 </body>
 </html>

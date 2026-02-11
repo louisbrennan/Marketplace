@@ -2,11 +2,46 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <Title>Basket</Title>
-    <link th:rel="stylesheet" th:href="style.css">
+    <Title>Home</Title>
+    <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 <body>
-    <h3>Basket</h3>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a class="logo" href="/">
+                <div>Marketplace</div>
+            </a>
+            <ul class="nav-menu">
+                <li>
+                    <div>
+                        <label for="search-bar"></label><input
+                            id="search-bar"
+                            type="search"
+                            placeholder="Search"
+                            required />
+                        <button type="submit" class="search-button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </li>
+                <li><a href="/basket">
+                    <i class="fa-solid fa-basket-shopping"></i>
+                </a></li>
+                <li><strong>Sign Up</strong></li>
+                <li><small>Log In</small></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="basket-page-container">
+        <div class="basket-items-container">
+            <h3>Your Basket</h3>
+        </div>
+        <div class="basket-payment-container">
+            <h3 class="not-bold">Total: €00.00</h3>
+
+        </div>
+    </div>
 </body>
 </html>

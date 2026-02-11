@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html"
-      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <Title>Home</Title>
-    <link th:rel="stylesheet" th:href="style.css">
+    <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <script th:src="index.js"></script>
 
 </head>
 <body>
+<!-- Navbar -->
+
     <nav class="navbar">
         <div class="nav-container">
             <a class="logo" href="/">
@@ -17,18 +17,18 @@
             </a>
             <ul class="nav-menu">
                 <li>
-                <div id="search-wrapper">
-                <input
-                        id="search-bar"
-                        type="search"
-                        placeholder="Search"
-                        required />
-                <button type="submit" class="search-button">
-                    <i class="fa fa-search"></i>
-                </button>
-                </div>
+                    <div>
+                        <label for="search-bar"></label><input
+                            id="search-bar"
+                            type="search"
+                            placeholder="Search"
+                            required />
+                        <button type="submit" class="search-button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
                 </li>
-                <li><a href="basket">
+                <li><a href="/basket">
                     <i class="fa-solid fa-basket-shopping"></i>
                 </a></li>
                 <li><strong>Sign Up</strong></li>
@@ -36,14 +36,45 @@
             </ul>
         </div>
     </nav>
-    <div class="filters-sidebar">
-        <button class="dropdown-btn">+</button>
-        <div class="dropdown-container">
-            <button>Sub filter 1</button>
-            <button>Sub filter 2</button>
+
+    <div class="index-page">
+        <div class="filters-sidebar">
+            <button class="dropdown-btn">Filter 1  <span id="dropdownSymbol"></span></button>
+            <div class="dropdown-container">
+                <button class="filter">Sub filter 1</button>
+                <button class="filter">Sub filter 2</button>
+            </div>
+
         </div>
 
-    </div>
+        <!-- Catalogue -->
+        <main>
+            <div class="catalogue-grid">
+                <div th:if="${#lists.isEmpty(products)}">
+                    <p>No products available.</p>
+                </div>
 
+                    <div th:each="product : ${products}" class="product-box">
+                        <a th:href="@{/product/{id}(id=${product.id})}">
+                            <img th:if="${product.image} == null"
+                                 th:src="@{/images/unloaded-image.png}"
+                                 alt="Product Image"
+                                 class="product-image">
+                            <img th:if="${product.image} != null"
+                                 th:src="@{/uploadedImages/{id}(id=${product.image.id})}"
+                                 alt="Product Image"
+                                 class="product-image">
+                            <h4 th:text="${product.title}"></h4>
+                        </a>
+
+                        <p th:text="${product.author}"></p>
+                        <p th:text="${product.genre}"></p>
+                        <p th:text="${product.price != null ? '€' + #numbers.formatDecimal(product.price,1,2) : 'FREE'}"></p>
+                    </div>
+
+            </div>
+        </main>
+    </div>
+    <script th:src="@{index.js}"></script>
 </body>
 </html>

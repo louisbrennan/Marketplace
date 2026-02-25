@@ -1,0 +1,35 @@
+package com.example.marketplace.model;
+
+import jakarta.persistence.*;
+
+import java.time.ZonedDateTime;
+import java.util.Date;
+
+@Entity
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private ZonedDateTime orderDateTime;
+    private double priceAtPurchase;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+    private int quantity;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    public Date getOrderDate() { return orderDate; }
+    public void setOrderDate(Date orderDate) { this.orderDate = orderDate; }
+    public double getPriceAtPurchase() { return priceAtPurchase; }
+    public void setPriceAtPurchase(double priceAtPurchase) { this.priceAtPurchase = priceAtPurchase; }
+    public Product getProduct() { return product; }
+    public void setProduct(Product product) { this.product = product; }
+    public int getQuantity() { return quantity; }
+    public void setQuantity(int quantity) { this.quantity = quantity; }
+    public User getUser() { return user; }
+    public void setUser(User user) { this.user = user; }
+    public int getId() { return id; }
+
+}

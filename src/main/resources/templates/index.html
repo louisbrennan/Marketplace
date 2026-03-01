@@ -9,46 +9,19 @@
 </head>
 <body>
 <!-- Navbar -->
-
-    <nav class="navbar">
-        <div class="nav-container">
-            <a class="logo" href="/">
-                <div>Marketplace</div>
-            </a>
-            <ul class="nav-menu">
-                <li>
-                    <div>
-                        <label for="search-bar"></label><input
-                            id="search-bar"
-                            type="search"
-                            placeholder="Search"
-                            required />
-                        <button type="submit" class="search-button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </li>
-                <li><a href="/basket">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                </a></li>
-                <li><strong>Sign Up</strong></li>
-                <li><small>Log In</small></li>
-            </ul>
-        </div>
-    </nav>
+    <div th:replace="fragments/navbar :: navbar"></div>
 
     <div class="index-page">
+        <!-- Filters -->
         <div class="filters-sidebar">
-            <button class="dropdown-btn">Filter 1  <span id="dropdownSymbol"></span></button>
-            <div class="dropdown-container">
-                <button class="filter">Sub filter 1</button>
-                <button class="filter">Sub filter 2</button>
-            </div>
-
+            <button class="dropdown-btn">Fiction  <span class="dropdownSymbol"></span></button>
+            <div class="dropdown-container" id="fiction"></div>
+            <button class="dropdown-btn">Non-Fiction    <span class="dropdownSymbol"></span></button>
+            <div class="dropdown-container" id="non-fiction"></div>
         </div>
 
         <!-- Catalogue -->
-        <main>
+        <main style="margin-left: 20rem">
             <div class="catalogue-grid">
                 <div th:if="${#lists.isEmpty(products)}">
                     <p>No products available.</p>

@@ -2,48 +2,23 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <Title>Home</Title>
+    <Title>Add Product</Title>
     <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 <body>
 <!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <a class="logo" href="/">
-                <div>Marketplace</div>
-            </a>
-            <ul class="nav-menu">
-                <li>
-                    <div>
-                        <label for="search-bar"></label><input
-                            id="search-bar"
-                            type="search"
-                            placeholder="Search"
-                            required />
-                        <button type="submit" class="search-button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </li>
-                <li><a href="/basket">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                </a></li>
-                <li><strong>Sign Up</strong></li>
-                <li><small>Log In</small></li>
-            </ul>
-        </div>
-    </nav>
-        <form style="padding-top:80px" action="/addProduct" method="post" enctype="multipart/form-data">
-            <input type="text" name="title" />
-            <input type="text" name="author" />
-            <input type="text" name="genre" />
-            <input type="text" name="publisher" />
-            <input type="text" name="description" />
-            <input type="number" name="price" />
-            <input type="file" name="imageFile" accept="image/*"/>
-            <button type="submit">Submit</button>
-        </form>
+    <form style="padding-top:80px" action="/addProduct" method="post" enctype="multipart/form-data">
+        <input type="text" name="title" />
+        <input type="text" name="author" />
+        <input type="text" name="genre" />
+        <input type="text" name="publisher" />
+        <input type="text" name="description" />
+        <input type="number" name="price" />
+        <input type="file" name="imageFile" accept="image/*"/>
+        <button type="submit">Submit</button>
+    </form>
 </body>

@@ -11,11 +11,11 @@ public class HomeController {
 
     private final ProductRepository productRepository;
 
-    public HomeController(ProductRepository productRepository, ImageRepository imageRepository) {
+    public HomeController(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }
 
-    @GetMapping("/")
+    @GetMapping({"/", "/home", "/index"})
     public String home(Model model) {
         model.addAttribute("products", productRepository.findAll());
         return "index";

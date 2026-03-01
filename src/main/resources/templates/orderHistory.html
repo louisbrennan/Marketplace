@@ -3,8 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <Title>Order History</Title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
 </head>
 <body>
-    <h3>Order History</h3>
+<!-- Navbar -->
+<!-- TODO: Group orders by datetime and clear basket -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+    <!-- Order History -->
+    <div class="basket-page-container">
+        <div class="basket-items-container">
+            <h2>Order History</h2>
+            <div th:if="${#maps.isEmpty(orders)}">
+                <p>No orders to date :(</p>
+            </div>
+            <div class="order-group" th:each="orderGroup : ${orders}">
+                <hr class="order-group-divider">
+                <h3 class="order-date-time"
+                    th:text="${#temporals.format(orderGroup.key, 'dd MMM yyyy, HH:mm')}">
+                </h3>
+                <div class="basket-item" th:each="item : ${orderGroup.value}">
+                    <a th:href="@{/product/{id}(id=${item.product.id})}" class="basket-product-image">
+                        <img th:if="${item.product.image == null}"
+                             th:src="@{/images/unloaded-image.png}"
+                             alt="Product Image"
+                             class="basket-product-image">
+                        <img th:if="${item.product.image != null}"
+                             th:src="@{/uploadedImages/{id}(id=${item.product.image?.id})}"
+                             alt="Product Image"
+                             class="basket-product-image">
+                    </a>
+
+                    <div class="basket-product-info">
+                        <div class="basket-product-title">
+                            <span class="basket-title" th:text="${item.product.title}"></span>
+                            <span class="basket-author" th:text="'by ' + ${item.product.author} "></span>
+                            <span style="padding-left: 1rem;" class="basket-title"
+                                  th:text="'€'+${#numbers.formatDecimal(item.priceAtPurchase, 1, 2)}"></span>
+                        </div>
+
+                        <div class="basket-product-description" th:text="${item.product.description}"></div>
+                    </div>
+                    <div class="basket-product-controls">
+                        <div class="basket-quantity-adjust">
+                            <p th:text="'Quantity: '+${item.quantity}"></p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>

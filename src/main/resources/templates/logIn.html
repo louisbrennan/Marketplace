@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <Title>Log In</Title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+</head>
+
+<body>
+<!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="signup-form-container">
+        <h2 class="signup-form-title">Login</h2>
+
+        <p class="signup-error" th:if="${error}" th:text="${error}"></p>
+
+        <form class="signup-form" action="/logIn" method="post">
+
+
+            <div class="signup-form-group">
+                <label for="username" class="signup-form-label">Username or Email</label>
+                <input type="text" id="username" name="username" class="signup-form-input" required>
+            </div>
+
+            <div class="signup-form-group">
+                <label for="password" class="signup-form-label">Password</label>
+                <input type="password" id="password" name="password" class="signup-form-input" required>
+            </div>
+
+            <button type="submit" class="signup-form-button">Login</button>
+
+        </form>
+    </div>

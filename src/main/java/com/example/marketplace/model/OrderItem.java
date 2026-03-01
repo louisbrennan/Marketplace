@@ -6,11 +6,11 @@ import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Entity
-public class Order {
+public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private ZonedDateTime orderDateTime;
+    private ZonedDateTime dateTime;
     private double priceAtPurchase;
     @ManyToOne
     @JoinColumn(name = "product_id")
@@ -20,8 +20,8 @@ public class Order {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Date getOrderDate() { return orderDate; }
-    public void setOrderDate(Date orderDate) { this.orderDate = orderDate; }
+    public ZonedDateTime getDateTime() { return dateTime; }
+    public void setDateTime(ZonedDateTime dateTime) { this.dateTime = dateTime; }
     public double getPriceAtPurchase() { return priceAtPurchase; }
     public void setPriceAtPurchase(double priceAtPurchase) { this.priceAtPurchase = priceAtPurchase; }
     public Product getProduct() { return product; }
@@ -31,5 +31,6 @@ public class Order {
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
     public int getId() { return id; }
+
 
 }

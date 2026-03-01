@@ -2,46 +2,88 @@
 <html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <Title>Home</Title>
+    <Title>Basket</Title>
     <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a class="logo" href="/">
-                <div>Marketplace</div>
-            </a>
-            <ul class="nav-menu">
-                <li>
-                    <div>
-                        <label for="search-bar"></label><input
-                            id="search-bar"
-                            type="search"
-                            placeholder="Search"
-                            required />
-                        <button type="submit" class="search-button">
-                            <i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </li>
-                <li><a href="/basket">
-                    <i class="fa-solid fa-basket-shopping"></i>
-                </a></li>
-                <li><strong>Sign Up</strong></li>
-                <li><small>Log In</small></li>
-            </ul>
-        </div>
-    </nav>
+<!-- Navbar -->
+    <div th:replace="fragments/navbar :: navbar"></div>
+<!-- Basket -->
     <div class="basket-page-container">
         <div class="basket-items-container">
-            <h3>Your Basket</h3>
+            <h2>Your Basket</h2>
+            <div th:if="${#lists.isEmpty(basket)}">
+                <p>There are no items in your basket :(</p>
+            </div>
+            <div class="basket-item" th:each="item : ${basket}" >
+                <a th:href="@{/product/{id}(id=${item.product.id})}" class="basket-product-image">
+                    <img th:if="${item.product.image == null}"
+                        th:src="@{/images/unloaded-image.png}"
+                        alt="Product Image"
+                        class="basket-product-image">
+                    <img th:if="${item.product.image != null}"
+                         th:src="@{/uploadedImages/{id}(id=${item.product.image?.id})}"
+                         alt="Product Image"
+                         class="basket-product-image">
+                </a>
+
+                <div class="basket-product-info">
+                    <div class="basket-product-title">
+                        <span class="basket-title" th:text="${item.product.title}"></span>
+                        <span class="basket-author" th:text="'by ' + ${item.product.author} "></span>
+                        <span style="padding-left: 1rem;" class="basket-title"
+                              th:text="'€'+${#numbers.formatDecimal(item.product.price, 1, 2)}"></span>
+                    </div>
+
+                    <div class="basket-product-description" th:text="${item.product.description}"></div>
+                </div>
+                <div class="basket-product-controls">
+                    <div class="basket-quantity-adjust">
+                        <form th:action="@{/basket/add/{id}(id=${item.product.id})}" method="post">
+                            <button type="submit" class="basket-quantity-button" >+</button>
+                        </form>
+                        <p th:text="${item.quantity}"></p>
+                        <form th:action="@{/basket/remove/{id}(id=${item.product.id})}" method="post">
+                            <button type="submit" class="basket-quantity-button" >-</button>
+                        </form>
+                    </div>
+                    <form th:action="@{/basket/delete/{id}(id=${item.product.id})}"
+                          method="post"
+                          style="padding-top: 15px">
+                        <button type="submit" class="basket-remove-btn" >×</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="basket-payment-container">
-            <h3 class="not-bold">Total: €00.00</h3>
-
+            <h3 class="not-bold" th:text="'Total: €'+${#numbers.formatDecimal(total, 1, 2)}"></h3>
+            <div class="buttons-wrapper">
+                <strong>Please select your payment method below:</strong>
+                <!-- All buttons with same action because payment method doesn't matter -->
+                <form th:action="@{/checkout}" method="post" class="payment-methods">
+                    <button class="pay-btn apple-pay">
+                        <img th:src="@{/images/apple.png}" alt="Apple Logo" class="apple-logo">
+                        Pay
+                    </button>
+                    <button class="pay-btn google-pay">
+                        <span class="g-logo">G</span>
+                        Pay
+                    </button>
+                    <button class="pay-btn card-pay">
+                        <span class="card-icons">
+                            <span class="visa">VISA  / </span>
+                            <span class="mc">
+                              <span class="circle red"></span>
+                              <span class="circle yellow"></span>
+                            </span>
+                        </span>
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
+
 </body>
 </html>

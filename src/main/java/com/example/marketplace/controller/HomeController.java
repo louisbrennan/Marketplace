@@ -6,6 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.stereotype.Controller;
 
+import static com.example.marketplace.constant.Genres.F_GENRES;
+import static com.example.marketplace.constant.Genres.NF_GENRES;
+
 @Controller
 public class HomeController {
 
@@ -18,8 +21,9 @@ public class HomeController {
     @GetMapping({"/", "/home", "/index"})
     public String home(Model model) {
         model.addAttribute("products", productRepository.findAll());
+        model.addAttribute("f_genres", F_GENRES);
+        model.addAttribute("nf_genres", NF_GENRES);
         return "index";
     }
-
 
 }

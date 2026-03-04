@@ -5,20 +5,53 @@
     <Title>Add Product</Title>
     <link rel="stylesheet" th:href="@{/style.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
 </head>
 <body>
-<!-- Navbar -->
-    <div th:replace="fragments/navbar :: navbar"></div>
+<div th:replace="fragments/navbar :: navbar"></div>
 
-    <form style="padding-top:80px" action="/addProduct" method="post" enctype="multipart/form-data">
-        <input type="text" name="title" />
-        <input type="text" name="author" />
-        <input type="text" name="genre" />
-        <input type="text" name="publisher" />
-        <input type="text" name="description" />
-        <input type="number" name="price" />
-        <input type="file" name="imageFile" accept="image/*"/>
-        <button type="submit">Submit</button>
+<div class="add-product-page">
+    <form class="add-product-form" action="/addProduct" method="post" enctype="multipart/form-data">
+        <h2>Add New Product</h2>
+
+        <div class="add-product-form-group">
+            <label>Title</label>
+            <input type="text" name="title" required/>
+        </div>
+        <div class="add-product-form-group">
+            <label>Author</label>
+            <input type="text" name="author" required/>
+        </div>
+        <div class="add-product-form-group">
+            <label>Genre</label>
+            <select name="genre" required class="add-product-select">
+                <option value="" disabled selected>Select a genre</option>
+                <option th:each="genre: ${f_genres}"
+                        th:value="${genre}"
+                        th:text="${genre}"></option>
+                <option th:each="genre: ${nf_genres}"
+                        th:value="${genre}"
+                        th:text="${genre}"></option>
+            </select>
+        </div>
+        <div class="add-product-form-group">
+            <label>Publisher</label>
+            <input type="text" name="publisher" required/>
+        </div>
+        <div class="add-product-form-group">
+            <label>Description</label>
+            <textarea name="description" required></textarea>
+        </div>
+        <div class="add-product-form-group">
+            <label>Price</label>
+            <input type="number" name="price" step="0.01" min="0" value="0.00"/>
+        </div>
+        <div class="add-product-form-group">
+            <label>Image</label>
+            <input type="file" name="imageFile" accept="image/*"/>
+        </div>
+
+        <button type="submit" class="add-product-submit-btn">Submit</button>
     </form>
+</div>
 </body>
+</html>

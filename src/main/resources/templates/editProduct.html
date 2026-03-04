@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <Title>Edit Product</Title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<main>
+    <form th:action="@{/product/{id}/edit(id=${product.id})}" method="post" enctype="multipart/form-data">
+        <div class="product-page">
+
+            <div class="product-page-image-container">
+                <img th:if="${product.image == null}"
+                     th:src="@{/images/unloaded-image.png}"
+                     alt="Product Image"
+                     class="big-product-image edit-product-image">
+                <img th:if="${product.image != null}"
+                     th:src="@{/uploadedImages/{id}(id=${product.image?.id})}"
+                     alt="Product Image"
+                     class="big-product-image edit-product-image">
+                <div class="add-product-form-group edit-image-upload">
+                    <label>Replace Image</label>
+                    <input type="file" name="imageFile" accept="image/*" />
+                </div>
+            </div>
+
+            <div class="product-page-top-right">
+                <div class="description-box">
+                    <div class="add-product-form-group">
+                        <label>Title</label>
+                        <input type="text" name="title" th:value="${product.title}" required
+                               class="edit-product-input" />
+                    </div>
+                    <div class="add-product-form-group">
+                        <label>Author</label>
+                        <input type="text" name="author" th:value="${product.author}" required
+                               class="edit-product-input" />
+                    </div>
+                    <div class="add-product-form-group">
+                        <label>Genre</label>
+                        <select name="genre" required class="add-product-select edit-product-input">
+                            <option value="" disabled>Select a genre</option>
+                            <option th:each="genre : ${f_genres}"
+                                    th:value="${genre}"
+                                    th:text="${genre}"></option>
+                            <option th:each="genre : ${nf_genres}"
+                                    th:value="${genre}"
+                                    th:text="${genre}"></option>
+
+                        </select>
+                    </div>
+                    <div class="add-product-form-group">
+                        <label>Publisher</label>
+                        <input type="text" name="publisher" th:value="${product.publisher}" required
+                               class="edit-product-input" />
+                    </div>
+                    <div class="add-product-form-group">
+                        <label>Description</label>
+                        <textarea name="description" required
+                                  class="edit-product-input edit-product-textarea"
+                                  th:text="${product.description}"></textarea>
+                    </div>
+                    <div class="add-product-form-group">
+                        <label>Price</label>
+                        <input type="number" name="price" th:value="${product.price}" step="0.01" min="0" required
+                               class="edit-product-input edit-product-input-price" />
+                    </div>
+                </div>
+                <div class="buttons-wrapper">
+                    <button type="submit" class="add-to"><b>Confirm Changes</b></button>
+                </div>
+            </div>
+
+            <div class="product-page-bottom"></div>
+
+        </div>
+    </form>
+</main>
+</body>
+</html>

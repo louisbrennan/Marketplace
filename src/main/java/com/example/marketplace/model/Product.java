@@ -41,4 +41,13 @@ public class Product {
 
     public Long getId() { return id; }
 
+    public void editProduct(Product product) {
+        this.title = product.getTitle();
+        this.author = product.getAuthor();
+        this.genre = product.getGenre();
+        this.publisher = product.getPublisher();
+        this.description = product.getDescription();
+        this.price = product.getPrice();
+    }
+
 }

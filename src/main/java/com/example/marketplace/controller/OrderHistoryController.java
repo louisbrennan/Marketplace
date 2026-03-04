@@ -30,6 +30,9 @@ public class OrderHistoryController {
             return "redirect:/logIn";
         }
         User user = (User) session.getAttribute("user");
+        if (user.isAdmin()) {
+            return "redirect:/customerOrders";
+        }
         List<OrderItem> orders = orderRepository.findByUser(user).orElse(new ArrayList<>());
 
         Map<ZonedDateTime, List<OrderItem>> groupedOrders = orders.stream()
@@ -42,6 +45,29 @@ public class OrderHistoryController {
 
         model.addAttribute("orders", groupedOrders);
 
+        return "orderHistory";
+    }
+
+    @GetMapping("/customerOrders")
+    public String customerOrders(Model model, HttpSession session) {
+        if (session.getAttribute("user") == null) {
+            return "redirect:/logIn";
+        }
+        User user = (User) session.getAttribute("user");
+        if (!user.isAdmin()) {
+            return "redirect:/orderHistory";
+        }
+        List<OrderItem> orders = orderRepository.findAll();
+
+        Map<ZonedDateTime, List<OrderItem>> groupedOrders = orders.stream()
+                .sorted(Comparator.comparing(item -> item.getDateTime(), Comparator.reverseOrder()))
+                .collect(Collectors.groupingBy(
+                        item -> item.getDateTime().truncatedTo(ChronoUnit.SECONDS),
+                        LinkedHashMap::new,
+                        Collectors.toList()
+                ));
+
+        model.addAttribute("orders", groupedOrders);
         return "orderHistory";
     }
 }

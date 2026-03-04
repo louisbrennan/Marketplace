@@ -12,6 +12,7 @@
         <a class="logo" href="/">
             <div>Marketplace</div>
         </a>
+        <p th:if="${session.user != null and session.user.admin}">Logged in as admin</p>
         <ul class="nav-menu">
             <li>
                 <div>
@@ -25,13 +26,15 @@
                     </button>
                 </div>
             </li>
-            <li><a href="/basket">
+            <li th:if="${session.user != null and !session.user.admin}"><a href="/basket">
                 <i class="fa-solid fa-basket-shopping"></i>
             </a></li>
             <li th:if="${session.user!=null}">
                 <a href="/logOut">Log Out</a></li>
-            <li th:if="${session.user!=null}">
+            <li th:if="${session.user!=null and !session.user.admin}">
                 <a href="/orderHistory">Order History</a></li>
+            <li th:if="${session.user!=null and session.user.admin}">
+                <a href="/customerOrders">Customer Orders</a></li>
             <li th:if="${session.user==null}"><a href="/signUp">
                 <strong>Sign Up</strong></a></li>
             <li th:if="${session.user==null}">

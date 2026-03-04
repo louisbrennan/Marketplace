@@ -29,12 +29,22 @@
             <div class="product-page-top-right">
                 <div class="description-box">
                     <h3 th:text="${product.title}"></h3>
+                    <h3 class="not-bold" th:text="${'By' + product.author}"></h3>
+                    <h4 th:text="${product.price != 0 ? '€' + #numbers.formatDecimal(product.price,1,2) : 'FREE'}"></h4>
                     <p th:text="${product.description}"></p>
                 </div>
                 <div class="buttons-wrapper">
-                    <form th:action="@{/product/{id}/add(id=${product.id})}" method="post">
+                    <form th:action="@{/product/{id}/add(id=${product.id})}"
+                          th:if="${session.user == null or (session.user != null and !session.user.admin)}"
+                          method="post">
                         <input type="hidden" name="productId" th:value="${product.id}"/>
                         <button type="submit" class="add-to"><b>Add to Basket</b></button>
+                    </form>
+                    <form th:action="@{/product/{id}/edit(id=${product.id})}"
+                          th:if="${session.user != null and session.user.admin}"
+                          method="get">
+                        <input type="hidden" name="productId" th:value="${product.id}"/>
+                        <button type="submit" class="add-to"><b>Edit Product</b></button>
                     </form>
                 </div>
             </div>

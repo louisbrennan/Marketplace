@@ -42,12 +42,17 @@
 
                         <p th:text="${product.author}"></p>
                         <p th:text="${product.genre}"></p>
-                        <p th:text="${product.price != null ? '€' + #numbers.formatDecimal(product.price,1,2) : 'FREE'}"></p>
+                        <p th:text="${product.price != 0 ? '€' + #numbers.formatDecimal(product.price,1,2) : 'FREE'}"></p>
                     </div>
 
             </div>
         </main>
     </div>
+    <!-- bridge genre list to external js -->
+    <script th:inline="javascript">
+        const fictionGenres = /*[[${f_genres}]]*/ ["Genre1", "Genre2"];
+        const nonFictionGenres = /*[[${nf_genres}]]*/ ["Genre1", "genre2"];
+    </script>
     <script th:src="@{index.js}"></script>
 </body>
 </html>

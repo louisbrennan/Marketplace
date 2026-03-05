@@ -16,14 +16,18 @@
         <ul class="nav-menu">
             <li>
                 <div>
-                    <label for="search-bar"></label><input
-                        id="search-bar"
-                        type="search"
-                        placeholder="Search"
-                        required />
-                    <button type="submit" class="search-button">
-                        <i class="fa fa-search"></i>
-                    </button>
+                    <form action="/search">
+                        <label for="search-bar"></label>
+                        <input
+                            id="search-bar"
+                            type="search"
+                            name="keyword"
+                            placeholder="Search"
+                            required/>
+                        <button type="submit" class="search-button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </form>
                 </div>
             </li>
             <li th:if="${session.user != null and !session.user.admin}"><a href="/basket">
